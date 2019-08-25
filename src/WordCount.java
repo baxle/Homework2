@@ -1,5 +1,7 @@
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
@@ -16,7 +18,8 @@ public class WordCount {
 
         System.out.println("Нужно ввести путь к файлу.");
         System.out.println("Можно ввести абсолютный путь к файлу.");
-        System.out.println("Можно ввести название файла, находящегося в директории проекта. (Text.txt уже лежит в директории)");
+        System.out.println("Можно ввести название файла, находящегося в директории проекта. (Text.txt уже лежит в директории), также можно ввести файл из вложенной папки src/Text.txt");
+
 
         fileName = (String) br.readLine();
 
@@ -28,7 +31,8 @@ public class WordCount {
         else
             try {
                 //Creating the BufferedReader to read the file
-                File textFile = new File(fileName);
+                Path testFilePath = Paths.get(fileName);
+                File textFile = new File(String.valueOf(testFilePath.toAbsolutePath()));
                 BufferedReader input = new BufferedReader(new FileReader(textFile));
 
                 //Creating the Map to store the words and their occurrences
@@ -39,7 +43,7 @@ public class WordCount {
                 while ((currentLine = input.readLine()) != null) {
 
                     //Parsing the words from each line
-                    StringTokenizer parser = new StringTokenizer(currentLine, " \t\n\r\f.,;:!?'\"1234567890()");
+                    StringTokenizer parser = new StringTokenizer(currentLine, " \t\n\r\f.,;–:-+!?'\\u2014\\u2013\\u2012()1234567890");
                     while (parser.hasMoreTokens()) {
                         String currentWord = parser.nextToken().toLowerCase();
                         Integer frequency = frequencyMap.get(currentWord);
@@ -78,12 +82,9 @@ public class WordCount {
             }
             finally {
                 try {
-                    if (br!=null){
                         br.close();
-                    }
                 }
                 catch (IOException e){
-
                 }
             }
     }
