@@ -42,8 +42,8 @@ public class WordCount {
                 //Reading line by line from the text file
                 while ((currentLine = input.readLine()) != null) {
 
-                    currentLine= currentLine.replaceAll("[^a-zA-Zа-яёА-ЯЁ]+", " ");
-                    StringTokenizer parser = new StringTokenizer(currentLine, " \t\n\r\f.,;–:-+!?'\\u2014\\u2013\\u2012()1234567890\\s+");
+                    currentLine= currentLine.replaceAll("[^a-zA-Zа-яёА-ЯЁ]", " ");
+                    StringTokenizer parser = new StringTokenizer(currentLine);
                     while (parser.hasMoreTokens()) {
                         String currentWord = parser.nextToken().toLowerCase();
                         Integer frequency = frequencyMap.get(currentWord);
