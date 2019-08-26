@@ -42,7 +42,7 @@ public class WordCount {
                 //Reading line by line from the text file
                 while ((currentLine = input.readLine()) != null) {
 
-                    currentLine= currentLine.replaceAll("/[^a-zA-Zа-яёА-ЯЁ ]/u", " ");
+                    currentLine= currentLine.replaceAll("[^a-zA-Zа-яёА-ЯЁ]+", " ");
                     StringTokenizer parser = new StringTokenizer(currentLine, " \t\n\r\f.,;–:-+!?'\\u2014\\u2013\\u2012()1234567890\\s+");
                     while (parser.hasMoreTokens()) {
                         String currentWord = parser.nextToken().toLowerCase();
@@ -76,16 +76,11 @@ public class WordCount {
                 System.err.println("Файл не найден!");
             }
 
-
             catch (IOException ie) {
-
+                ie.printStackTrace();
             }
             finally {
-                try {
                     br.close();
-                }
-                catch (IOException e){
-                }
             }
     }
 }
